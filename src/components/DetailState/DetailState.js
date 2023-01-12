@@ -1,16 +1,22 @@
 import { Button, Container, Grid, Typography } from '@mui/material'
 import axios from "axios";
 import React, {useEffect, useState} from 'react'
+import { useDispatch, useSelector } from "react-redux";
+import { updateId } from '../../features/sates/sates';
 
-export const DetailState = ({stateId, restartDetail}) => {
+
+export const DetailState = ({restartDetail}) => {
+  const selector = useSelector((state) => state.state);
+  const dispatch = useDispatch();
+
     const [sateDetail, setsateDetail] = useState(null)
     useEffect(() => {
-      if(stateId !== ''){
+      if(selector.idState !== ''){
         axios
-        .get(`https://api.datos.gob.mx/v1/condiciones-atmosfericas?_id=${stateId}`)
+        .get(`https://api.datos.gob.mx/v1/condiciones-atmosfericas?_id=${selector.idState}`)
         .then((values) => setsateDetail(values?.data.results[0]));
       }
-    }, [stateId])
+    }, [selector.idState])
     
   return (
     <Container style={{display:'flex', justifyContent:'center', alignContent:'center', alignItems:'center', marginTop:'4vh'}}>
@@ -33,7 +39,7 @@ export const DetailState = ({stateId, restartDetail}) => {
                 <Typography><strong>validdateutc:</strong> {sateDetail.validdateutc}</Typography>
             </Grid>
             <Grid item md={12}>
-                <Button onClick={() =>restartDetail()} variant='contained'>Regresar</Button>
+                <Button onClick={() =>  dispatch(updateId(''))} variant='contained'>Regresar</Button>
             </Grid>
         </Grid>}
     </Container>

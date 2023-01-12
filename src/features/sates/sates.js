@@ -1,14 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
+
+const initialState = {
+  idState: '',
+}
 
 export const detailSate = createSlice({
-    name:'detailStale',
-    initialState:{idSate:''},
-    reducer:{
-        updateId: (state, action) =>{console.log("aaaaaa", state,action)}
+  name: 'stateDetail',
+  initialState,
+  reducers: {
+    updateId: (state, action) => {
+      state.idState = action.payload
     },
+  },
 })
 
-console.log(".......updateId", detailSate)
 export const {updateId} = detailSate.actions
 
 export default detailSate.reducer
